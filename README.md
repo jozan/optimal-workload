@@ -1,10 +1,14 @@
 ### My workload optimizer
 
-Tehtävän ratkaisemisessa on kokeiltu deklaratiivista ohjelmointiparadigmaa, eli funktionaalista ohjelmointia. Sen yksi perusajatuksista on muuttumaton ajatusmalli (immutable), eli kerran luotua ei voi enää koskaan muokata.
+Javascriptillä tehdyn algoritmin pohjalla ovat [Wikipedian pseudokoodi](https://en.wikipedia.org/wiki/Knapsack_problem#0.2F1_knapsack_problem) ja [Go-kielinen toteutus](http://rosettacode.org/wiki/Knapsack_problem/0-1#Go).
 
-Runko on ottanut mallia [Fatih Cetinkayan](https://github.com/cmfatih/knapsack) knapsack moduulista, joka on kirjoitettu Javascriptillä. Lopputulos kuitenkin on tehty [Immutable.js](https://facebook.github.io/immutable-js/)-kirjastolla, joka tuo ns. "immutable collections" javascriptille.
+##### Käytetyt kirjastot 
 
-[Lodash](https://lodash.com/) tuo mukavia pieniä apufunktiota kun javascriptin omat metodit eivät enää riitä. 
+- [Immutable.js](https://facebook.github.io/immutable-js/) tuo ns. "immutable collectionit" javascriptiin
+- [Popmotion](http://popmotion.io/) Animointikirjasto
+- [jQuery](https://jquery.com/)
+
+
 
 ### Quick setup
 
