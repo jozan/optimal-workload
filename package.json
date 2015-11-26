@@ -1,12 +1,13 @@
 {
-  "name": "Optimal Workload",
+  "name": "optimal-workload",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
     "gulp": "^3.9.0",
     "immutable": "^3.7.5",
+    "jquery": "^2.1.4",
     "laravel-elixir": "^4.0.3",
-    "lodash": "^3.10.1",
-    "normalize.css": "^3.0.3"
+    "normalize.css": "^3.0.3",
+    "popmotion": "^4.0.1"
   }
 }
