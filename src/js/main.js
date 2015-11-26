@@ -1,9 +1,9 @@
-import { Map, List } from 'immutable';
-import _ from 'lodash';
+import resolver from './resolver';
+import ui from 'popmotion';
+import $ from 'jquery';
 
 const items = [
-  { name: 'Tussi', credits: 20, workload: 2000 },
-  // { name: 'Projekti', credits: 20, workload: 200 },
+  { name: 'Projekti', credits: 20, workload: 200 },
   { name: 'Algoritmit', credits: 2, workload: 40 },
   { name: 'Videot', credits: 5, workload: 20 },
   { name: 'Keikka', credits: 1, workload: 10 },
@@ -11,48 +11,69 @@ const items = [
   { name: 'Lopputyö', credits: 17, workload: 100 }
 ];
 
-function resolve(capacity, items) {
+const optimalCourses = resolver(200, items);
+console.log(optimalCourses);
 
-  if (! _.isNumber(capacity)) {
-    throw "Capacity is not a number";
-  }
+const $courses = $('#courses');
+optimalCourses.courses.map(course => {
+  $courses.append(
+    `<tr>
+      <td>${course.get('name')}</td>
+      <td>${course.get('credits')}</td>
+      <td>${course.get('workload')}</td>
+    </tr>`
+  );
+});
 
-  if (! _.isArray(items)) {
-    throw "Items is not an array";
-  }
 
-  let leftCap = capacity,
-      itemsFiltered;
+var ACTOR_DATA = 'actor',
+    ripple = new ui.Tween({
+        values: {
+            radius: {
+                current: 0,
+                to: 100
+            },
+            opacity: {
+                current: .5,
+                to: 0
+            }
+        },
+        dilate: .3,
+        duration: 500,
+        ease: 'easeOut'
+    }),
+    getXY = function(event) {
+        var isTouch = false;
 
-  // Create immutable list
-  const list = List(items);
+        event = event.originalEvent || event;
+        isTouch = (event.touches);
 
-  items = list
-    // Exclude items that exceed the given capacity
-    // TODO: this might be unnecessary...
-    .filter(item =>
-      item.workload >= 0 && item.workload <= capacity
-    )
+        return {
+            x: isTouch ? event.touches[0].pageX - event.touches[0].target.offsetLeft : event.offsetX,
+            y: isTouch ? event.touches[0].pageY - event.touches[0].target.offsetTop : event.offsetY
+        };
+    };
 
-    // Sort by workload
-    .sortBy(item => -item.workload)
+$('body').on('touchstart mousedown', 'button', function(e) {
+    var button = this,
+        $button = $(button),
+        rippleActor = $button.data(ACTOR_DATA) || new ui.Actor(),
+        coordinates = getXY(e);
 
-    // Filter over capacity
-    .filter(item => {
-      const value = parseInt(item.workload, 10);
+    $button.data(ACTOR_DATA, rippleActor);
+    e.preventDefault();
+    e.stopPropagation();
 
-      if ((leftCap - value) >= 0) {
-        leftCap = leftCap - value;
-        return true;
-      }
+    rippleActor.start(ripple.extend({
+        onUpdate: function(output) {
+            var gradient = 'radial-gradient(' + output.radius + 'px at ' + coordinates.x + 'px ' + coordinates.y + 'px, rgba(255,255,255, ' + output.opacity + ') 0%, rgba(255,255,255, ' + output.opacity + ') ' + output.radius + 'px,  rgba(255,255,255, 0) ' + (output.radius + 1) + 'px)';
 
-      return false;
+            ui.css.set(button, 'backgroundImage', gradient);
+        }
+    }));
+
+    // Animate at full speed on mouseup
+    $('body').on('mouseup touchend', function() {
+        rippleActor.dilate = 1;
     });
-
-  return items;
-}
-
-// Run resolver
-const optimalWorkload = resolve(200, items);
-
-console.log(optimalWorkload.toJS());
+});
