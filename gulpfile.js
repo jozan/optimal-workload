@@ -45,11 +45,8 @@ elixir(function(mix) {
   );
   */
 
-  /*
-  mix.sass('main.scss', paths.output.css, {
-    includePaths: [paths.include.bootstrap]
-  });
-  */
+  mix.sass('main.scss');
+
 
   // Transpile scripts
   /*mix.babel([

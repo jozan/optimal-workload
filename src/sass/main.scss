@@ -1,0 +1,49 @@
+@import 'normalize';
+
+body {
+  background: #333;
+  color: orange;
+}
+
+.content {
+  padding: 64px 0;
+  width: 640px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid hsl(200, 9%, 40%);
+  }
+
+  td, th {
+    text-align: left;
+    padding: .75rem;
+    line-height: 1.5;
+    vertical-align: top;
+    border-top: 1px solid hsl(200, 9%, 40%);
+  }
+}
+
+td {
+  color: orangered;
+}
+
+button {
+  background: #2d78df;
+  border-radius: 4px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  display: block;
+  margin: 40px auto;
+  padding: 12px 35px;
+  font-size: 24px;
+  outline: 0;
+  transition: background-color 150ms ease-out;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
