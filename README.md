@@ -9,7 +9,6 @@ Javascriptillä tehdyn algoritmin pohjalla ovat [Wikipedian pseudokoodi](https:/
 - [jQuery](https://jquery.com/)
 
 
-
 ### Quick setup
 
 ```
@@ -17,3 +16,5 @@ npm install -g gulp
 npm install
 gulp watch
 ```
+
+To build for production run `gulp --production`.
