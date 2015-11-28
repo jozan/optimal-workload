@@ -5,3 +5,5 @@ Thumbs.db
 npm-debug.log*
 public/
 public/*
+
+Envoy.blade.php
