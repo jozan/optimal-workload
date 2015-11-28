@@ -6,7 +6,7 @@
     "gulp": "^3.9.0",
     "immutable": "^3.7.5",
     "jquery": "^2.1.4",
-    "laravel-elixir": "^4.0.3",
+    "laravel-elixir": "^4.0.4",
     "normalize.css": "^3.0.3",
     "popmotion": "^4.0.1"
   }
