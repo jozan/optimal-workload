@@ -62,7 +62,7 @@ elixir(function(mix) {
   // mix.task('clean-cache', './resources/views/**/*');
 
   // Browser sync
-  if (!process.env.PRODUCTION) {
+  if (config.production) {
     mix.browserSync({
       proxy: null,
       server: {
