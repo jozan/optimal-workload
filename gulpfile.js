@@ -62,10 +62,12 @@ elixir(function(mix) {
   // mix.task('clean-cache', './resources/views/**/*');
 
   // Browser sync
-  mix.browserSync({
-    proxy: null,
-    server: {
-      baseDir: './public'
-    }
-  });
+  if (!process.env.PRODUCTION) {
+    mix.browserSync({
+      proxy: null,
+      server: {
+        baseDir: './public'
+      }
+    });
+  }
 });
