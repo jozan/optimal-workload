@@ -7,3 +7,7 @@ public/
 public/*
 
 Envoy.blade.php
+
+src/js/lib/velocity-ui.js
+
+src/js/lib/velocity.js

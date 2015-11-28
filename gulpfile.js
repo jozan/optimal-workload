@@ -32,6 +32,10 @@ elixir(function(mix) {
     'src/sass/_normalize.scss'
   );
 
+  // Copy Velocity libs to simplify imports in javascript
+  mix.copy('node_modules/velocity-animate/velocity.js', 'src/js/lib/velocity.js');
+  mix.copy('node_modules/velocity-animate/velocity.ui.js', 'src/js/lib/velocity-ui.js');
+
   mix.copy(
     config.assetsPath + '/index.html',
     config.publicPath + '/index.html'
