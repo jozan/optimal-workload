@@ -41,7 +41,7 @@ var loading = [
       complete: function () {
         $('.wrap').velocity( 'transition.slideUpIn' );
         $('img').velocity( 'transition.flipYIn' );
-        $('html').css({ background: '#fff' });
+        $('html').css({ background: '#F1F3F2' });
       }
     }
   }
