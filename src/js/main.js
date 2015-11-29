@@ -63,6 +63,11 @@ $('#show-all').on('click', e => {
 });
 
 $('.card-two').on('mouseenter', e => {
+
+  if ($(e.target).hasClass('velocity-animating')) {
+    return;
+  }
+
   $('.card-one').velocity({
     rotateX: '84deg',
     translateY: '-316px'
@@ -86,6 +91,11 @@ $('.card-two').on('mouseenter', e => {
 });
 
 $('.card-one').on('mouseenter', e => {
+
+  if ($(e.target).hasClass('velocity-animating')) {
+    return;
+  }
+
   $('.card-one').velocity({
     rotateX: '.1deg',
     translateY: 0
