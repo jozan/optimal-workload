@@ -39,7 +39,7 @@ var loading = [
     { elements: $body, properties: { width: '100%' } },
     { elements: $body, properties: { height: '100%' }, options: {
       complete: function () {
-        $('.content').velocity( 'transition.slideUpIn' );
+        $('.wrap').velocity( 'transition.slideUpIn' );
         $('img').velocity( 'transition.flipYIn' );
         $('html').css({ background: '#fff' });
       }
