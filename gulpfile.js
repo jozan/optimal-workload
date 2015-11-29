@@ -30,16 +30,16 @@ elixir(function(mix) {
   mix.copy(
     'node_modules/normalize.css/normalize.css',
     'src/sass/_normalize.scss'
-  );
+  )
+    // Copy Velocity libs to simplify imports in javascript
+    .copy('node_modules/velocity-animate/velocity.min.js', 'src/js/lib/velocity.min.js')
+    .copy('node_modules/velocity-animate/velocity.ui.min.js', 'src/js/lib/velocity-ui.min.js')
 
-  // Copy Velocity libs to simplify imports in javascript
-  mix.copy('node_modules/velocity-animate/velocity.js', 'src/js/lib/velocity.js');
-  mix.copy('node_modules/velocity-animate/velocity.ui.js', 'src/js/lib/velocity-ui.js');
-
-  mix.copy(
-    config.assetsPath + '/index.html',
-    config.publicPath + '/index.html'
-  );
+    // Copy index.html
+    .copy(
+      config.assetsPath + '/index.html',
+      config.publicPath + '/index.html'
+    );
 
   /*
   // Copy fonts

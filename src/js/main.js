@@ -1,8 +1,8 @@
 import jQuery from 'jquery';
 // Assign jQuery globally before loading velocity
 window.jQuery = window.$ = jQuery;
-require('./lib/velocity');
-require('./lib/velocity-ui');
+require('./lib/velocity.min');
+require('./lib/velocity-ui.min');
 
 import resolver from './resolver';
 
