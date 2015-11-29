@@ -28,12 +28,19 @@ h1 {
   font-size: 2.6em;
   margin: 0.87em 0;
   color: #888;
+  display: inline-block;
 }
 
 .wrap {
   opacity: 0;
   padding-top: 64px;
-  text-align: center;
+}
+
+header {
+  margin: 0 auto;
+  width: 640px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .content {
@@ -43,6 +50,7 @@ h1 {
   margin: 0 auto;
   padding: 64px;
   width: 640px;
+  position: relative;
 }
 
 table {
@@ -65,4 +73,32 @@ table {
   }
 
   td { color: #555; }
+}
+
+button {
+  padding: 8px 16px;
+  border: 0;
+  background: #FFDB72;
+  border-radius: 4px;
+  align-self: center;
+}
+
+
+// 3D
+.wrap {
+  perspective: 1000px;
+  perspective-origin: 50% -50%;
+  transform-style: preserve-3d;
+}
+
+.card {
+  position: absolute;
+  right: 0;
+  left: 0;
+  transition: box-shadow .5s ease-out;
+
+  &-one { transform: rotateX(84deg) translateY(47px); }
+  &-two { transform: rotateX(84deg) translateY(-316px); }
+
+  &:hover {box-shadow: 0 10px 10px rgba(0,0,0,.05); }
 }

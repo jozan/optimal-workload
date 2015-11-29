@@ -19,8 +19,16 @@ const optimalCourses = resolver(200, items);
 console.log(optimalCourses);
 
 const $courses = $('#courses');
+const $allCourses = $('#all-courses');
 optimalCourses.courses.map(course => {
   $courses.append(
+    `<tr>
+      <td>${course.get('name')}</td>
+      <td>${course.get('credits')}</td>
+      <td>${course.get('workload')}</td>
+    </tr>`
+  );
+  $allCourses.append(
     `<tr>
       <td>${course.get('name')}</td>
       <td>${course.get('credits')}</td>
@@ -40,7 +48,6 @@ var loading = [
     { elements: $body, properties: { height: '100%' }, options: {
       complete: function () {
         $('.wrap').velocity( 'transition.slideUpIn' );
-        $('img').velocity( 'transition.flipYIn' );
         $('html').css({ background: '#F1F3F2' });
       }
     }
@@ -50,3 +57,42 @@ var loading = [
 //$('h1').velocity({ width: 75 });
 //Velocity(document.querySelector('h1'), { width: 75 });
 $.Velocity.RunSequence(loading);
+
+$('#show-all').on('click', e => {
+  $('.wrap').velocity('transition.slideDownOut');
+});
+
+$('.card-two').on('mouseenter', e => {
+  $('.card-one').velocity({
+    rotateX: '84deg',
+    translateY: '-316px'
+  }, { easing: 'easeOutQuid' });
+
+  $('.card-two').velocity({
+    rotateX: '.1deg',
+    translateY: '1px'
+  }, { easing: 'easeOutQuid' });
+
+}).on('mouseleave', e => {
+  $('.card-one').velocity({
+    rotateX: '84deg',
+    translateY: '47px'
+  }, { easing: 'easeOutQuid' });
+
+  $('.card-two').velocity({
+    rotateX: '84deg',
+    translateY: '-316px'
+  }, { easing: 'easeOutQuid' });
+});
+
+$('.card-one').on('mouseenter', e => {
+  $('.card-one').velocity({
+    rotateX: '.1deg',
+    translateY: 0
+  }, { easing: 'easeOutQuid' });
+}).on('mouseleave', e => {
+  $('.card-one').velocity({
+    rotateX: '84deg',
+    translateY: '47px'
+  }, { easing: 'easeOutQuid' });
+});

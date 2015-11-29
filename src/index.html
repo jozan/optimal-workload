@@ -11,9 +11,13 @@
 
   <div class="wrap">
 
-    <h1>Optimal workload</h1>
+    <header>
+      <h1>Optimal workload</h1>
+      <button id="show-all">Show all courses</button>
+    </header>
 
-    <div class="content">
+    <div class="content card card-one">
+
 
       <table>
         <thead>
@@ -27,6 +31,24 @@
       </table>
 
     </div>
+
+    <div class="content card card-two">
+
+
+      <table>
+        <thead>
+          <tr>
+            <th>Course name</th>
+            <th>Credits</th>
+            <th>Workload</th>
+          </tr>
+        </thead>
+        <tbody id="all-courses"></tbody>
+      </table>
+
+    </div>
+
+
 
   </div>
 
