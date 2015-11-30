@@ -24,7 +24,7 @@ function resolve(i, w, items) {
 
   if (v1 > v0) {
     return {
-      name: (i1 + ' ' + items[i].name).trim(),
+      name: (i1 + ';;' + items[i].name).trim(),
       workload: w1 + items[i].workload,
       credits: v1
     }
@@ -39,7 +39,7 @@ function resolve(i, w, items) {
 
 export default function(capacity, items) {
   const solution = resolve(items.length-1, capacity, items);
-  const optimal = List(solution.name.split(' '));
+  const optimal = List(solution.name.split(';;')).delete(0);
 
   const courses = List(items)
     .map(i => Map(i))
