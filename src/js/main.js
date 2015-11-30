@@ -5,15 +5,18 @@ require('./lib/velocity.min');
 require('./lib/velocity-ui.min');
 
 import resolver from './resolver';
+import randomCourses from './randomCourses';
 
-const items = [
-  { name: 'Projekti', credits: 20, workload: 200 },
-  { name: 'Algoritmit', credits: 2, workload: 40 },
-  { name: 'Videot', credits: 5, workload: 20 },
-  { name: 'Keikka', credits: 1, workload: 10 },
-  { name: 'Ohjelmointi', credits: 9, workload: 90 },
-  { name: 'Lopputyö', credits: 17, workload: 100 }
-];
+// const items = [
+//   { name: 'Projekti', credits: 20, workload: 200 },
+//   { name: 'Algoritmit', credits: 2, workload: 40 },
+//   { name: 'Videot', credits: 5, workload: 20 },
+//   { name: 'Keikka', credits: 1, workload: 10 },
+//   { name: 'Ohjelmointi', credits: 9, workload: 90 },
+//   { name: 'Lopputyö', credits: 17, workload: 100 }
+// ];
+
+const items = randomCourses(10);
 
 const optimalCourses = resolver(200, items);
 console.log(optimalCourses);
