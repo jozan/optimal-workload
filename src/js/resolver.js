@@ -45,7 +45,7 @@ export default function(capacity, items) {
     .map(i => Map(i))
     .filter(i => {
       return optimal.includes(i.get('name'));
-    });
+    }).toJS();
 
   return {
     courses,

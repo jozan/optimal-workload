@@ -67,6 +67,7 @@ elixir(function(mix) {
   // Compile transpiled scripts
   //mix.browserify('../tmp/js/all.js');
   mix.browserify('main.js', paths.output.js + '/app.js');
+  mix.browserify('worker.js', paths.output.js + '/worker.js');
 
   // Clean Twig cache
   // mix.task('clean-cache', './resources/views/**/*');

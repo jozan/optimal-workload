@@ -6,9 +6,6 @@ require('./lib/velocity-ui.min');
 
 import slider from 'nouislider';
 
-import resolver from './resolver';
-import randomCourses from './randomCourses';
-
 // const items = [
 //   { name: 'Projekti', credits: 20, workload: 200 },
 //   { name: 'Algoritmit', credits: 2, workload: 40 },
@@ -18,30 +15,39 @@ import randomCourses from './randomCourses';
 //   { name: 'Lopputyö', credits: 17, workload: 100 }
 // ];
 
-const items = randomCourses(10);
+const worker = new Worker('js/worker.js');
 
-const optimalCourses = resolver(200, items);
-console.log(optimalCourses);
-
-const $courses = $('#courses');
-const $allCourses = $('#all-courses');
-optimalCourses.courses.map(course => {
-  $courses.append(
-    `<tr>
-      <td>${course.get('name')}</td>
-      <td>${course.get('credits')}</td>
-      <td>${course.get('workload')}</td>
-    </tr>`
-  );
-  $allCourses.append(
-    `<tr>
-      <td>${course.get('name')}</td>
-      <td>${course.get('credits')}</td>
-      <td>${course.get('workload')}</td>
-    </tr>`
-  );
+worker.addEventListener('message', e => {
+  showOptimalCourses(e.data);
 });
 
+// Calculate optimal courses on worker to keep UI responsive
+worker.postMessage({
+  cmd: 'optimize',
+  targetHours: 200,
+  randomCourses: 170
+});
+
+function showOptimalCourses(optimalCourses) {
+  const $courses = $('#courses');
+  const $allCourses = $('#all-courses');
+  optimalCourses.courses.map(course => {
+    $courses.append(
+      `<tr>
+        <td>${course.name}</td>
+        <td>${course.credits}</td>
+        <td>${course.workload}</td>
+      </tr>`
+    );
+    $allCourses.append(
+      `<tr>
+        <td>${course.name}</td>
+        <td>${course.credits}</td>
+        <td>${course.workload}</td>
+      </tr>`
+    );
+  });
+}
 
 var $body = $('body');
 
