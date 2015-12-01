@@ -5,9 +5,9 @@ Javascriptillä tehdyn algoritmin pohjalla ovat [Wikipedian pseudokoodi](https:/
 ##### Käytetyt kirjastot 
 
 - [Immutable.js](https://facebook.github.io/immutable-js/) tuo ns. "immutable collectionit" javascriptiin
-- [Popmotion](http://popmotion.io/) Animointikirjasto
+- [VelocityJS](http://velocityjs.org/) Animointikirjasto
+- [noUiSlider](http://refreshless.com/nouislider/) Range Slider
 - [jQuery](https://jquery.com/)
-
 
 ### Quick setup
 

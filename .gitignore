@@ -9,3 +9,5 @@ public/*
 Envoy.blade.php
 
 src/js/lib/*
+
+src/sass/_nouislider.scss

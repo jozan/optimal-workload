@@ -35,6 +35,12 @@ elixir(function(mix) {
     .copy('node_modules/velocity-animate/velocity.min.js', 'src/js/lib/velocity.min.js')
     .copy('node_modules/velocity-animate/velocity.ui.min.js', 'src/js/lib/velocity-ui.min.js')
 
+    // Copy noUISlider stylesheet
+    .copy(
+      'node_modules/nouislider/distribute/nouislider.min.css',
+      'src/sass/_nouislider.scss'
+    )
+
     // Copy index.html
     .copy(
       config.assetsPath + '/index.html',

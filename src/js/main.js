@@ -4,6 +4,8 @@ window.jQuery = window.$ = jQuery;
 require('./lib/velocity.min');
 require('./lib/velocity-ui.min');
 
+import slider from 'nouislider';
+
 import resolver from './resolver';
 import randomCourses from './randomCourses';
 
