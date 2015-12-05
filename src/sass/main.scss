@@ -34,7 +34,7 @@ h1 {
 
 .wrap {
   opacity: 0;
-  padding-top: 64px;
+  padding: 64px 0;
 }
 
 header {
@@ -45,13 +45,7 @@ header {
 }
 
 .content {
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 3px 6px rgba(0,0,0,.05);
-  margin: 0 auto;
-  padding: 64px;
-  width: 640px;
-  position: relative;
+  padding: 0 64px 24px 64px;
 }
 
 table {
@@ -84,22 +78,56 @@ button {
   align-self: center;
 }
 
+.card {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0,0,0,.05);
+  margin: 0 auto;
+  width: 640px;
 
-// 3D
-.wrap {
-  perspective: 1000px;
-  perspective-origin: 50% -50%;
-  transform-style: preserve-3d;
+  &-two {
+    display: none;
+  }
+
 }
 
-.card {
-  position: absolute;
-  right: 0;
-  left: 0;
-  transition: box-shadow .5s ease-out;
+.controller {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 48px;
+  padding: 48px 64px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(to bottom, hsl(0, 0%, 98%) 0%, hsl(0, 0%, 97%) 100%);
+  position: relative;
 
-  &-one { transform: rotateX(84deg) translateY(47px); }
-  &-two { transform: rotateX(84deg) translateY(-316px); }
+  &-slider {
 
-  &:hover {box-shadow: 0 10px 10px rgba(0,0,0,.05); }
+  }
+
+  &-input {
+    $height: 48px;
+
+    position: absolute;
+    margin: 0 auto;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: -$height/2;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    line-height: $height;
+    height: $height;
+    text-align: center;
+    width: $height*1.7;
+
+    &:focus {
+      outline: none;
+      border-color: hsl(45, 100%, 72%);
+      box-shadow: 0 0 0 2px hsl(45, 100%, 72%);
+    }
+  }
+}
+
+// Slider style overrides
+.noUi-connect {
+  background: hsl(45, 100%, 72%);
 }

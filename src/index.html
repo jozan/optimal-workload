@@ -16,24 +16,29 @@
       <button id="show-all">Show all courses</button>
     </header>
 
-    <div class="content card card-one">
+    <div class="card card-one">
 
+      <div class="controller">
+        <div id="slider" class="controller-slider"></div>
+        <input id="target" type="text" class="controller-input">
+      </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Course name</th>
-            <th>Credits</th>
-            <th>Workload</th>
-          </tr>
-        </thead>
-        <tbody id="courses"></tbody>
-      </table>
+      <div class="content">
+        <table>
+          <thead>
+            <tr>
+              <th>Course name</th>
+              <th>Credits</th>
+              <th>Workload</th>
+            </tr>
+          </thead>
+          <tbody id="courses"></tbody>
+        </table>
+      </div>
 
     </div>
 
     <div class="content card card-two">
-
 
       <table>
         <thead>
@@ -47,8 +52,6 @@
       </table>
 
     </div>
-
-
 
   </div>
 

@@ -4,7 +4,8 @@ window.jQuery = window.$ = jQuery;
 require('./lib/velocity.min');
 require('./lib/velocity-ui.min');
 
-import slider from 'nouislider';
+import noUiSlider from 'nouislider';
+import { format } from './helpers';
 
 // const items = [
 //   { name: 'Projekti', credits: 20, workload: 200 },
@@ -49,6 +50,9 @@ function showOptimalCourses(optimalCourses) {
   });
 }
 
+/***************************************************************
+ * Loading animation
+ */
 var $body = $('body');
 
 var loading = [
@@ -65,55 +69,31 @@ var loading = [
   }
 ];
 
-//$('h1').velocity({ width: 75 });
-//Velocity(document.querySelector('h1'), { width: 75 });
 $.Velocity.RunSequence(loading);
 
-$('#show-all').on('click', e => {
-  $('.wrap').velocity('transition.slideDownOut');
+
+/***************************************************************
+ * Slider
+ */
+const slider = document.getElementById('slider');
+
+noUiSlider.create(slider, {
+  start: 40,
+  step: 1,
+  connect: 'lower',
+  range: {
+    min: 1,
+    max: 300
+  },
+  format,
 });
 
-$('.card-two').on('mouseenter', e => {
+const inputTarget = document.getElementById('target');
 
-  if ($(e.target).hasClass('velocity-animating')) {
-    return;
-  }
-
-  $('.card-one').velocity({
-    rotateX: '84deg',
-    translateY: '-316px'
-  }, { easing: 'easeOutQuid' });
-
-  $('.card-two').velocity({
-    rotateX: '.1deg',
-    translateY: '1px'
-  }, { easing: 'easeOutQuid' });
-
-}).on('mouseleave', e => {
-  $('.card-one').velocity({
-    rotateX: '84deg',
-    translateY: '47px'
-  }, { easing: 'easeOutQuid' });
-
-  $('.card-two').velocity({
-    rotateX: '84deg',
-    translateY: '-316px'
-  }, { easing: 'easeOutQuid' });
+slider.noUiSlider.on('update', (values, handle) => {
+  inputTarget.value = values[handle];
 });
 
-$('.card-one').on('mouseenter', e => {
-
-  if ($(e.target).hasClass('velocity-animating')) {
-    return;
-  }
-
-  $('.card-one').velocity({
-    rotateX: '.1deg',
-    translateY: 0
-  }, { easing: 'easeOutQuid' });
-}).on('mouseleave', e => {
-  $('.card-one').velocity({
-    rotateX: '84deg',
-    translateY: '47px'
-  }, { easing: 'easeOutQuid' });
+inputTarget.addEventListener('change', e => {
+  slider.noUiSlider.set(e.target.value);
 });
