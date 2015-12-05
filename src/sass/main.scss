@@ -34,7 +34,7 @@ h1 {
 
 .wrap {
   opacity: 0;
-  padding: 64px 0;
+  padding: 24px 0 64px 0;
 }
 
 header {
@@ -76,6 +76,13 @@ button {
   background: #FFDB72;
   border-radius: 4px;
   align-self: center;
+  // position: absolute;
+  // right: 0;
+  // top: -64px;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .card {
