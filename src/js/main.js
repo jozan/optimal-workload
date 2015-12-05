@@ -27,7 +27,7 @@ worker.addEventListener('message', e => {
 worker.postMessage({
   cmd: 'optimize',
   targetHours: 200,
-  randomCourses: 170
+  randomCourses: 100
 });
 
 function showOptimalCourses(optimalCourses) {
