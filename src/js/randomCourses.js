@@ -18,7 +18,7 @@ export default function randomCourses(n) {
   let courses = [];
 
   for (var i = 0; i < n; i++) {
-    const name = names[rand(0, names.length)];
+    const name = names[rand(0, names.length-1)];
     const credits = rand(1,20);
     const workload = rand(10,200);
 
