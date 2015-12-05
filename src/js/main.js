@@ -1,8 +1,9 @@
 import jQuery from 'jquery';
 // Assign jQuery globally before loading velocity
 window.jQuery = window.$ = jQuery;
-require('./lib/velocity.min');
-require('./lib/velocity-ui.min');
+require('./lib/velocity');
+require('./lib/velocity-ui');
+require('./lib/stickyfill');
 
 import noUiSlider from 'nouislider';
 import { format } from './helpers';
@@ -61,8 +62,12 @@ var loading = [
     { elements: $body, properties: { width: '50%' } },
     { elements: $body, properties: { width: '100%' } },
     { elements: $body, properties: { height: '100%' }, options: {
-      complete: function () {
-        $('.wrap').velocity( 'transition.slideUpIn' );
+      complete() {
+        $('.wrap').velocity('transition.slideUpIn', {
+            complete(el) {
+              $(el).css('transform', '');
+            }
+        });
         $('html').css({ background: '#F1F3F2' });
       }
     }
@@ -71,6 +76,7 @@ var loading = [
 
 $.Velocity.RunSequence(loading);
 
+$('.sticky').Stickyfill()
 
 /***************************************************************
  * Slider

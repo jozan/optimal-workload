@@ -84,6 +84,7 @@ button {
   box-shadow: 0 3px 6px rgba(0,0,0,.05);
   margin: 0 auto;
   width: 640px;
+  position: relative;
 
   &-two {
     display: none;
@@ -130,4 +131,16 @@ button {
 // Slider style overrides
 .noUi-connect {
   background: hsl(45, 100%, 72%);
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
 }

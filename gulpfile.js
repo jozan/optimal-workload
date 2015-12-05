@@ -26,14 +26,16 @@ gulp.task('clean-temp', function (cb) {
 
 elixir(function(mix) {
 
-  // Normalize.css - this way it's easier to update if needed
-  mix.copy(
-    'node_modules/normalize.css/normalize.css',
-    'src/sass/_normalize.scss'
-  )
+  mix
+    // Normalize.css - this way it's easier to update if needed
+    .copy('node_modules/normalize.css/normalize.css', 'src/sass/_normalize.scss')
+
     // Copy Velocity libs to simplify imports in javascript
-    .copy('node_modules/velocity-animate/velocity.min.js', 'src/js/lib/velocity.min.js')
-    .copy('node_modules/velocity-animate/velocity.ui.min.js', 'src/js/lib/velocity-ui.min.js')
+    .copy('node_modules/velocity-animate/velocity.min.js', 'src/js/lib/velocity.js')
+    .copy('node_modules/velocity-animate/velocity.ui.min.js', 'src/js/lib/velocity-ui.js')
+
+    // Copy Stickyfill polyfill
+    .copy('node_modules/Stickyfill/dist/stickyfill.min.js', 'src/js/lib/stickyfill.js')
 
     // Copy noUISlider stylesheet
     .copy(
