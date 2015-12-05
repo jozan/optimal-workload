@@ -43,9 +43,8 @@ export default function(capacity, items) {
 
   const courses = List(items)
     .map(i => Map(i))
-    .filter(i => {
-      return optimal.includes(i.get('name'));
-    }).toJS();
+    .filter(i => optimal.includes(i.get('name')))
+    .toJS();
 
   return {
     courses,
