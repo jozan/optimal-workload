@@ -29,17 +29,9 @@ worker.addEventListener('message', e => {
 // Show all courses
 showAllCourses(items);
 
-function hideButton(buttonId) {
-  $(buttonId).velocity("fadeOut", { duration: 1500 }).addClass('hidden');
-}
-
-function showButton(buttonId) {
-  $(buttonId).velocity("fadeIn", { duration: 1500 }).addClass('hidden');
-}
-
 $('#optimize').on('click', e => {
-  hideButton('#optimize').showButton('#edit-options');
-  toggleContent();
+  fadeOut('#optimize');
+  toggleContent('.all-courses', '.optimized-courses');
   // Calculate optimal courses on worker to keep UI responsive
   worker.postMessage({
     cmd: 'optimize',
@@ -49,9 +41,8 @@ $('#optimize').on('click', e => {
 });
 
 $('#edit-options').on('click', function() {
-  console.log('moi');
-  toggleContent();
-  hideButton('#edit-options').showButton('#optimize');
+  fadeOut('#edit-options');
+  toggleContent('.optimized-courses', '.all-courses');
 });
 
 
@@ -73,14 +64,40 @@ function makeRows(rows) {
   return html;
 }
 
-function toggleContent() {
-  $('.optimized-courses').toggle();
-  $('.all-courses').toggle();
+function fadeOut(e) {
+  $(e).velocity("fadeOut", { duration: 1500 }).addClass('hidden');
+}
+
+function fadeIn(e) {
+  $(e).velocity("fadeIn", { duration: 1500 }).removeClass('hidden');
+}
+
+function toggleContent(courses1, courses2) {
+  if ($(courses1).is(':visible') ) {
+    $(courses1).velocity("slideUp", {
+      duration: 1500,
+      complete(el) {
+        $(courses2).velocity("slideDown", { duration: 1500 });
+      }
+    });
+  } else {
+    $(courses1).velocity("slideDown", {
+      duration: 1500,
+      complete(el) {
+        $(courses2).velocity("slideUp", { duration: 1500 });
+      }
+    });
+  }
+}
+
+function slideIn(e) {
+
 }
 
 function showAllCourses(courses) {
   const $courses = $('#courses');
   const $allCourses = $('#all-courses');
+  fadeIn('#optimize');
 
   // Clear previous results;
   $allCourses.html('');
@@ -91,6 +108,7 @@ function showAllCourses(courses) {
 
 function showOptimalCourses(optimalCourses) {
   const $courses = $('#courses');
+  fadeIn('#edit-options');
 
   // Clear previous results;
   $courses.html('');
