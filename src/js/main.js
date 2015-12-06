@@ -45,9 +45,6 @@ window.state = {
 // Generate random courses
 let items = List(randomCourses(5));
 
-// TODO: remove me
-window.items = items;
-
 // Create Web Worker
 const worker = new Worker('js/worker.js');
 
