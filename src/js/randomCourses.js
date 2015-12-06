@@ -1,3 +1,5 @@
+import { List } from 'immutable';
+
 const names = [
   'Algoritmit',
   'Keikka',
@@ -12,6 +14,15 @@ const names = [
 // Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function uniq(array) {
+  array = List(array).sortBy(course => course.name).toJS();
+
+  return array.reduce((prev, curr) => {
+      if (prev.name !== curr.name) prev.push(curr);
+      return prev;
+  }, []);
 }
 
 export default function randomCourses(n) {
@@ -29,5 +40,5 @@ export default function randomCourses(n) {
     });
   };
 
-  return courses;
+  return uniq(courses);
 }

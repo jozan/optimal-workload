@@ -70,21 +70,6 @@ table {
   td { color: #555; }
 }
 
-button {
-  padding: 8px 16px;
-  border: 0;
-  background: #FFDB72;
-  border-radius: 4px;
-  align-self: center;
-  // position: absolute;
-  // right: 0;
-  // top: -64px;
-
-  &.hidden {
-    display: none;
-  }
-}
-
 .card {
   background: #fff;
   border-radius: 6px;
@@ -94,32 +79,73 @@ button {
   position: relative;
 
   &-two {
-    display: none;
+    // display: none;
   }
 
+}
+
+.optimized-courses {
+  display: none;
+}
+
+button {
+  padding: 0 16px;
+  border: 0;
+  background: #FFDB72;
+  border-radius: 4px;
+  text-transform: uppercase;
+  transition: all 0.2s ease-out;
+  box-shadow: 0 2px 8px rgba(0,0,0,0),
+              0 0 0 2px #aaa;
+
+  &:focus { outline: none; }
+  &:hover {
+    transform: scale(1.04);
+    box-shadow: 0 2px 8px rgba(0,0,0,.11);
+  }
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .controller {
   border-bottom: 1px solid #eee;
   margin-bottom: 48px;
-  padding: 48px 64px;
+  padding: 40px 64px;
   border-radius: 4px 4px 0 0;
   background: linear-gradient(to bottom, hsl(0, 0%, 98%) 0%, hsl(0, 0%, 97%) 100%);
   position: relative;
 
   &-slider {
+    display: flex;
+    align-items: center;
 
+    .slider {
+      width: 100%;
+      margin-right: 24px;
+    }
+  }
+
+  .actions {
+    $height: 48px;
+    align-items: center;
+    bottom: -$height/2;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    right: 0;
+
+    & > * { margin: 0 8px; }
+
+    button {
+      height: $height;
+    }
   }
 
   &-input {
     $height: 48px;
-
-    position: absolute;
-    margin: 0 auto;
-    z-index: 10;
-    left: 0;
-    right: 0;
-    bottom: -$height/2;
     border: 1px solid #ddd;
     border-radius: 4px;
     line-height: $height;

@@ -3,10 +3,10 @@ import jQuery from 'jquery';
 window.jQuery = window.$ = jQuery;
 require('./lib/velocity');
 require('./lib/velocity-ui');
-require('./lib/stickyfill');
 
 import noUiSlider from 'nouislider';
 import { format } from './helpers';
+import randomCourses from './randomCourses';
 
 // const items = [
 //   { name: 'Projekti', credits: 20, workload: 200 },
@@ -17,38 +17,69 @@ import { format } from './helpers';
 //   { name: 'Lopputyö', credits: 17, workload: 100 }
 // ];
 
+// Generate random courses
+const items = randomCourses(20);
+
 const worker = new Worker('js/worker.js');
 
 worker.addEventListener('message', e => {
+  toggleContent();
   showOptimalCourses(e.data);
 });
 
-// Calculate optimal courses on worker to keep UI responsive
-worker.postMessage({
-  cmd: 'optimize',
-  targetHours: 200,
-  randomCourses: 100
+// Show all courses
+showAllCourses(items);
+
+$('#optimize').on('click', e => {
+  // Calculate optimal courses on worker to keep UI responsive
+  worker.postMessage({
+    cmd: 'optimize',
+    targetHours: format.from($('#target').val()),
+    courses: items
+  });
 });
+
+/**
+ * Create HTML table rows from array of objects
+ *   - Every key is in its own cell
+ */
+function makeRows(rows) {
+  let html = '';
+
+  rows.map(row => {
+    const keys = Object.keys(row);
+    html += '<tr>';
+    keys.map(key => html += `<td>${row[key]}</td>`);
+    html += '</tr>';
+  });
+
+  return html;
+}
+
+function toggleContent() {
+  $('.optimized-courses').toggle();
+  $('.all-courses').toggle();
+}
+
+function showAllCourses(courses) {
+  const $courses = $('#courses');
+  const $allCourses = $('#all-courses');
+
+  // Clear previous results;
+  $allCourses.html('');
+
+  const htmlCourses = makeRows(courses);
+  $allCourses.append(htmlCourses);
+}
 
 function showOptimalCourses(optimalCourses) {
   const $courses = $('#courses');
-  const $allCourses = $('#all-courses');
-  optimalCourses.courses.map(course => {
-    $courses.append(
-      `<tr>
-        <td>${course.name}</td>
-        <td>${course.credits}</td>
-        <td>${course.workload}</td>
-      </tr>`
-    );
-    $allCourses.append(
-      `<tr>
-        <td>${course.name}</td>
-        <td>${course.credits}</td>
-        <td>${course.workload}</td>
-      </tr>`
-    );
-  });
+
+  // Clear previous results;
+  $courses.html('');
+
+  const htmlOptimalCourses = makeRows(optimalCourses.courses);
+  $courses.append(htmlOptimalCourses);
 }
 
 /***************************************************************
@@ -75,8 +106,6 @@ var loading = [
 ];
 
 $.Velocity.RunSequence(loading);
-
-$('.sticky').Stickyfill()
 
 /***************************************************************
  * Slider

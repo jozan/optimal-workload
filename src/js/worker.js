@@ -1,11 +1,13 @@
 import resolver from './resolver';
-import randomCourses from './randomCourses';
 
 self.addEventListener('message', function(e) {
   const data = e.data;
   switch (data.cmd) {
     case 'optimize':
-      const optimalCourses = resolver(data.targetHours, randomCourses(data.randomCourses));
+      // Calculate optimal courses
+      const optimalCourses = resolver(data.targetHours, data.courses);
+
+      // Send calculated courses back to UI thread
       self.postMessage(optimalCourses);
       break;
     case 'stop':
