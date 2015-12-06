@@ -12,6 +12,7 @@ import {
   makeRows,
   makeEditableRows
 } from './helpers';
+
 import randomCourses from './randomCourses';
 
 // const items = [
@@ -143,17 +144,19 @@ $('.cell-edit').on('change', e => {
 const $body = $('body');
 
 const loading = [
-    { elements: $body, properties: { width: '20%' } },
-    { elements: $body, properties: { width: '30%' } },
-    { elements: $body, properties: { width: '50%' } },
-    { elements: $body, properties: { width: '100%' } },
-    { elements: $body, properties: { height: '100%' }, options: {
+  { elements: $body, properties: { width: '20%' } },
+  { elements: $body, properties: { width: '30%' } },
+  { elements: $body, properties: { width: '50%' } },
+  { elements: $body, properties: { width: '100%' } },
+  { elements: $body, properties: { height: '100%' },
+    options: {
       complete() {
         $('.wrap').velocity('transition.slideUpIn', {
-            complete(el) {
-              $(el).css('transform', '');
-            }
+          complete(el) {
+            $(el).css('transform', '');
+          }
         });
+
         $('html').css({ background: '#F1F3F2' });
       }
     }
