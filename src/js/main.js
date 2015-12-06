@@ -1,13 +1,17 @@
 import { List } from 'immutable';
 import jQuery from 'jquery';
 
-// Assign jQuery globally before loading velocity
+// Assign jQuery globally for depending libraries
 window.jQuery = window.$ = jQuery;
 require('./lib/velocity');
 require('./lib/velocity-ui');
+require('./slider');
 
-import noUiSlider from 'nouislider';
-import { format } from './helpers';
+import {
+  format,
+  makeRows,
+  makeEditableRows
+} from './helpers';
 import randomCourses from './randomCourses';
 
 // const items = [
@@ -18,6 +22,10 @@ import randomCourses from './randomCourses';
 //   { name: 'Ohjelmointi', credits: 9, workload: 90 },
 //   { name: 'Lopputyö', credits: 17, workload: 100 }
 // ];
+
+/***************************************************************
+ * Initialize application
+ */
 
 /**
  * Global application state
@@ -41,6 +49,10 @@ window.items = items;
 // Create Web Worker
 const worker = new Worker('js/worker.js');
 
+// Show all courses in the start
+showAllCourses(items);
+
+// Listen Web Worker when it has finished its job
 worker.addEventListener('message', e => {
   state.isOptimizing = false;
 
@@ -57,9 +69,6 @@ worker.addEventListener('message', e => {
     });
   }
 });
-
-// Show all courses
-showAllCourses(items);
 
 $('#optimize').on('click', e => {
   $('.all-courses').velocity('slideUp', 400);
@@ -89,48 +98,6 @@ $('#edit-options').on('click', e => {
     });
   }
 });
-
-
-/**
- * Create HTML table rows from array of objects
- *   - Every key is in its own cell
- */
-function makeRows(rows) {
-  let html = '';
-
-  rows.map(row => {
-    const keys = Object.keys(row);
-    html += '<tr>';
-    keys.map(key => html += `<td>${row[key]}</td>`);
-    html += '</tr>';
-  });
-
-  return html;
-}
-
-// Same as makeRows but cell content is
-// wrapped around input element
-function makeEditableRows(rows) {
-  let html = '';
-
-  rows.map((row, rowIndex) => {
-    const keys = Object.keys(row);
-    html += '<tr>';
-    keys.map(key => html += `
-      <td>
-        <input
-          class="cell-edit"
-          data-row="${rowIndex}"
-          data-key="${key}"
-          value="${row[key]}"
-        >
-      </td>`
-    );
-    html += '</tr>';
-  });
-
-  return html;
-}
 
 function showAllCourses(courses) {
   const $allCourses = $('#all-courses');
@@ -194,29 +161,3 @@ const loading = [
 ];
 
 $.Velocity.RunSequence(loading);
-
-/***************************************************************
- * Slider
- */
-const slider = document.getElementById('slider');
-
-noUiSlider.create(slider, {
-  start: 40,
-  step: 1,
-  connect: 'lower',
-  range: {
-    min: 1,
-    max: 300
-  },
-  format,
-});
-
-const inputTarget = document.getElementById('target');
-
-slider.noUiSlider.on('update', (values, handle) => {
-  inputTarget.value = values[handle];
-});
-
-inputTarget.addEventListener('change', e => {
-  slider.noUiSlider.set(e.target.value);
-});
