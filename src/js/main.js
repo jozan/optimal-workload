@@ -127,9 +127,9 @@ function showOptimalCourses(optimalCourses) {
 /***************************************************************
  * Loading animation
  */
-var $body = $('body');
+const $body = $('body');
 
-var loading = [
+const loading = [
     { elements: $body, properties: { width: '20%' } },
     { elements: $body, properties: { width: '30%' } },
     { elements: $body, properties: { width: '50%' } },
