@@ -1,4 +1,5 @@
 import jQuery from 'jquery';
+
 // Assign jQuery globally before loading velocity
 window.jQuery = window.$ = jQuery;
 require('./lib/velocity');
@@ -17,21 +18,48 @@ import randomCourses from './randomCourses';
 //   { name: 'Lopputyö', credits: 17, workload: 100 }
 // ];
 
-// Generate random courses
-const items = randomCourses(20);
+/**
+ * Global application state
+ *
+ * To keep track of which view is currently
+ * visible so we don't need to rely on
+ * slow DOM checks.
+ */
+window.state = {
+  showEdit: true,
+  showOptimized: false,
+  isOptimizing: false
+};
 
+// Generate random courses
+const items = randomCourses(5);
+
+// Create Web Worker
 const worker = new Worker('js/worker.js');
 
 worker.addEventListener('message', e => {
+  state.isOptimizing = false;
   showOptimalCourses(e.data);
+
+  if (!state.showOptimized) {
+    $('.optimized-courses').velocity('slideDown', {
+      duration: 400,
+      complete(el) {
+        state.showOptimized = true;
+      }
+    });
+  }
 });
 
 // Show all courses
 showAllCourses(items);
 
 $('#optimize').on('click', e => {
-  fadeOut('#optimize');
-  toggleContent('.all-courses', '.optimized-courses');
+  $('.all-courses').velocity('slideUp', 400);
+
+  state.showEdit = false;
+  state.isOptimizing = true;
+
   // Calculate optimal courses on worker to keep UI responsive
   worker.postMessage({
     cmd: 'optimize',
@@ -40,11 +68,20 @@ $('#optimize').on('click', e => {
   });
 });
 
-$('#edit-options').on('click', function() {
-  fadeOut('#edit-options');
-  toggleContent('.optimized-courses', '.all-courses');
-});
+$('#edit-options').on('click', e => {
+  state.showOptimized = false;
 
+  $('.optimized-courses').velocity('slideUp', 400);
+
+  if (!state.showEdit) {
+    $('.all-courses').velocity('slideDown', {
+      duration: 400,
+      complete(el) {
+        state.showEdit = true;
+      }
+    });
+  }
+});
 
 
 /**
@@ -64,40 +101,10 @@ function makeRows(rows) {
   return html;
 }
 
-function fadeOut(e) {
-  $(e).velocity("fadeOut", { duration: 1500 }).addClass('hidden');
-}
-
-function fadeIn(e) {
-  $(e).velocity("fadeIn", { duration: 1500 }).removeClass('hidden');
-}
-
-function toggleContent(courses1, courses2) {
-  if ($(courses1).is(':visible') ) {
-    $(courses1).velocity("slideUp", {
-      duration: 1500,
-      complete(el) {
-        $(courses2).velocity("slideDown", { duration: 1500 });
-      }
-    });
-  } else {
-    $(courses1).velocity("slideDown", {
-      duration: 1500,
-      complete(el) {
-        $(courses2).velocity("slideUp", { duration: 1500 });
-      }
-    });
-  }
-}
-
-function slideIn(e) {
-
-}
 
 function showAllCourses(courses) {
-  const $courses = $('#courses');
   const $allCourses = $('#all-courses');
-  fadeIn('#optimize');
+  $('.optimized-courses').velocity('slideUp');
 
   // Clear previous results;
   $allCourses.html('');
@@ -108,7 +115,7 @@ function showAllCourses(courses) {
 
 function showOptimalCourses(optimalCourses) {
   const $courses = $('#courses');
-  fadeIn('#edit-options');
+  $('.all-courses').velocity('slideUp');
 
   // Clear previous results;
   $courses.html('');
