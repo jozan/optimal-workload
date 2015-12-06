@@ -1,6 +1,5 @@
 var elixir = require('laravel-elixir');
 var gulp = require('gulp');
-var rimraf = require('rimraf');
 var config = elixir.config;
 
 // Configure paths
@@ -18,13 +17,6 @@ var paths = {
   }
 };
 
-
-// Clean temp directory
-gulp.task('clean-temp', function (cb) {
-  rimraf('./' + config.assetsPath + '/src/tmp/', cb);
-});
-
-
 elixir(function(mix) {
 
   mix
@@ -34,9 +26,6 @@ elixir(function(mix) {
     // Copy Velocity libs to simplify imports in javascript
     .copy('node_modules/velocity-animate/velocity.min.js', 'src/js/lib/velocity.js')
     .copy('node_modules/velocity-animate/velocity.ui.min.js', 'src/js/lib/velocity-ui.js')
-
-    // Copy Stickyfill polyfill
-    .copy('node_modules/Stickyfill/dist/stickyfill.min.js', 'src/js/lib/stickyfill.js')
 
     // Copy noUISlider stylesheet
     .copy(
@@ -50,30 +39,12 @@ elixir(function(mix) {
       config.publicPath + '/index.html'
     );
 
-  /*
-  // Copy fonts
-  mix.copy(
-    'resources/assets/fonts',
-    pathPrefix + 'assets/fonts'
-  );
-  */
-
+  // Compile stylesheets
   mix.sass('main.scss');
 
-
-  // Transpile scripts
-  /*mix.babel([
-    'main.js'
-  ], paths.output.js);
-*/
-
-  // Compile transpiled scripts
-  //mix.browserify('../tmp/js/all.js');
-  mix.browserify('main.js', paths.output.js + '/app.js');
-  mix.browserify('worker.js');
-
-  // Clean Twig cache
-  // mix.task('clean-cache', './resources/views/**/*');
+  // Transpile all scripts
+  mix.browserify('main.js', paths.output.js + '/app.js')
+     .browserify('worker.js');
 
   // Browser sync
   if (!config.production) {
