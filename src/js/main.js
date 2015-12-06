@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import jQuery from 'jquery';
 
 // Assign jQuery globally before loading velocity
@@ -32,14 +33,20 @@ window.state = {
 };
 
 // Generate random courses
-const items = randomCourses(5);
+let items = List(randomCourses(5));
+
+// TODO: remove me
+window.items = items;
 
 // Create Web Worker
 const worker = new Worker('js/worker.js');
 
 worker.addEventListener('message', e => {
   state.isOptimizing = false;
-  showOptimalCourses(e.data);
+
+  const { data } = e;
+  data.courses = List(data.courses);
+  showOptimalCourses(data);
 
   if (!state.showOptimized) {
     $('.optimized-courses').velocity('slideDown', {
@@ -64,7 +71,7 @@ $('#optimize').on('click', e => {
   worker.postMessage({
     cmd: 'optimize',
     targetHours: format.from($('#target').val()),
-    courses: items
+    courses: items.toJS()
   });
 });
 
@@ -101,6 +108,29 @@ function makeRows(rows) {
   return html;
 }
 
+// Same as makeRows but cell content is
+// wrapped around input element
+function makeEditableRows(rows) {
+  let html = '';
+
+  rows.map((row, rowIndex) => {
+    const keys = Object.keys(row);
+    html += '<tr>';
+    keys.map(key => html += `
+      <td>
+        <input
+          class="cell-edit"
+          data-row="${rowIndex}"
+          data-key="${key}"
+          value="${row[key]}"
+        >
+      </td>`
+    );
+    html += '</tr>';
+  });
+
+  return html;
+}
 
 function showAllCourses(courses) {
   const $allCourses = $('#all-courses');
@@ -109,7 +139,7 @@ function showAllCourses(courses) {
   // Clear previous results;
   $allCourses.html('');
 
-  const htmlCourses = makeRows(courses);
+  const htmlCourses = makeEditableRows(courses);
   $allCourses.append(htmlCourses);
 }
 
@@ -123,6 +153,22 @@ function showOptimalCourses(optimalCourses) {
   const htmlOptimalCourses = makeRows(optimalCourses.courses);
   $courses.append(htmlOptimalCourses);
 }
+
+/***************************************************************
+ * Edit rows
+ */
+$('.cell-edit').on('change', e => {
+  const $cell = $(e.target);
+  const row = $cell.data('row');
+  const key = $cell.data('key');
+  const value = $cell.val();
+
+  // Update row value
+  items = items.update(row, r => {
+    r[key] = parseInt(value, 10);
+    return r;
+  });
+});
 
 /***************************************************************
  * Loading animation
