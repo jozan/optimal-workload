@@ -23,14 +23,23 @@ const items = randomCourses(20);
 const worker = new Worker('js/worker.js');
 
 worker.addEventListener('message', e => {
-  toggleContent();
   showOptimalCourses(e.data);
 });
 
 // Show all courses
 showAllCourses(items);
 
+function hideButton(buttonId) {
+  $(buttonId).velocity("fadeOut", { duration: 1500 }).addClass('hidden');
+}
+
+function showButton(buttonId) {
+  $(buttonId).velocity("fadeIn", { duration: 1500 }).addClass('hidden');
+}
+
 $('#optimize').on('click', e => {
+  hideButton('#optimize').showButton('#edit-options');
+  toggleContent();
   // Calculate optimal courses on worker to keep UI responsive
   worker.postMessage({
     cmd: 'optimize',
@@ -38,6 +47,14 @@ $('#optimize').on('click', e => {
     courses: items
   });
 });
+
+$('#edit-options').on('click', function() {
+  console.log('moi');
+  toggleContent();
+  hideButton('#edit-options').showButton('#optimize');
+});
+
+
 
 /**
  * Create HTML table rows from array of objects
