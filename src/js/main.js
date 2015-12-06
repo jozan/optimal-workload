@@ -10,7 +10,8 @@ require('./slider');
 import {
   format,
   makeRows,
-  makeEditableRows
+  makeEditableRows,
+  createNewItem,
 } from './helpers';
 
 import randomCourses from './randomCourses';
@@ -125,7 +126,7 @@ function showOptimalCourses(optimalCourses) {
 /***************************************************************
  * Edit rows
  */
-$('.cell-edit').on('change', e => {
+$('table').on('change', '.cell-edit', e => {
   const $cell = $(e.target);
   const row = $cell.data('row');
   const key = $cell.data('key');
@@ -136,6 +137,40 @@ $('.cell-edit').on('change', e => {
     r[key] = parseInt(value, 10);
     return r;
   });
+});
+
+/***************************************************************
+ * Add new row
+ */
+$('form').on('submit', e => {
+  e.preventDefault();
+  const $inputs = $('form').find('input');
+  const values = [];
+
+  $inputs.each((i, item) => {
+    const $item = $(item);
+    values.push($item.val());
+    $item.val('')
+  });
+
+  items = items.push(createNewItem(values));
+
+  // Re-render list
+  showAllCourses(items);
+});
+
+/***************************************************************
+ * Remove row
+ */
+$('table').on('click', '.remove-row', e => {
+  const $row = $(e.target);
+  const row = $row.data('row');
+
+  // Remove row
+  items = items.delete(row);
+
+  // Re-render list
+  showAllCourses(items);
 });
 
 /***************************************************************

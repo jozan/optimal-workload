@@ -8,6 +8,14 @@ export const format = {
   from: value => value.replace(' h', '')
 }
 
+export function createNewItem(values) {
+  return {
+    name: values[0],
+    credits: parseInt(values[1]),
+    workload: parseInt(values[2])
+  };
+}
+
 /**
  * Create HTML table rows from array of objects
  *   - Every key is in its own cell
@@ -43,6 +51,10 @@ export function makeEditableRows(rows) {
         >
       </td>`
     );
+    html += `
+      <td>
+        <span class="remove-row icon-trashcan" data-row="${rowIndex}"></span>
+      </td>`;
     html += '</tr>';
   });
 

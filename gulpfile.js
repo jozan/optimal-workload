@@ -33,6 +33,12 @@ elixir(function(mix) {
       'src/sass/_nouislider.scss'
     )
 
+    // Copy fonts
+    .copy(
+      config.assetsPath + '/fonts',
+      config.publicPath + '/fonts'
+    )
+
     // Copy index.html
     .copy(
       config.assetsPath + '/index.html',
