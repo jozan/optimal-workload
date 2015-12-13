@@ -8,11 +8,14 @@ export const format = {
   from: value => value.replace(' h', '')
 }
 
+/**
+ * Create a new object from given values
+ */
 export function createNewItem(values) {
   return {
     name: values[0],
-    credits: parseInt(values[1]),
-    workload: parseInt(values[2])
+    credits: parseInt(values[1], 10),
+    workload: parseInt(values[2], 10)
   };
 }
 
