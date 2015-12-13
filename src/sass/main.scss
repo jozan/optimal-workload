@@ -87,8 +87,12 @@ table {
   width: 640px;
 }
 
-.optimized-courses {
-  display: none;
+// Hide by default
+.optimized-courses { display: none; }
+
+.courses-summary {
+  background: #F5F5F5;
+  font-weight: bolder;
 }
 
 .controller {

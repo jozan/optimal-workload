@@ -111,10 +111,20 @@ function showAllCourses(courses) {
 
 function showOptimalCourses(optimalCourses) {
   const $courses = $('#courses');
+  const $coursesSymmary = $('#courses-summary');
   $('.all-courses').velocity('slideUp');
 
   // Clear previous results;
   $courses.html('');
+  $coursesSymmary.html('');
+
+  const htmlCoursesSummary = makeRows([{
+    empty: 'Total',
+    totalCredits: optimalCourses.totalCredits,
+    totalWorkload: optimalCourses.totalWorkload
+  }]);
+
+  $coursesSymmary.append(htmlCoursesSummary);
 
   const htmlOptimalCourses = makeRows(optimalCourses.courses);
   $courses.append(htmlOptimalCourses);
