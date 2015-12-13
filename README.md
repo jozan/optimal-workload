@@ -1,4 +1,6 @@
-### My workload optimizer
+### Työmäärän optimointi algoritmilla
+
+Tsiigaa [demo](http://ow.latehours.net).
 
 Javascriptillä tehdyn algoritmin pohjalla ovat [Wikipedian pseudokoodi](https://en.wikipedia.org/wiki/Knapsack_problem#0.2F1_knapsack_problem) ja [Go-kielinen toteutus](http://rosettacode.org/wiki/Knapsack_problem/0-1#Go).
 
@@ -11,7 +13,7 @@ Ohjelmointikielenä on käytetty Javascriptin uusinta standardia [ECMAScript 201
 - [noUiSlider](http://refreshless.com/nouislider/) Range Slider
 - [jQuery](https://jquery.com/)
 
-### Quick setup
+### Pika setuppi
 
 ```
 npm install -g gulp
@@ -19,4 +21,9 @@ npm install
 gulp watch
 ```
 
-To build for production run `gulp --production`.
+Tuotantoa varten aja: `gulp --production`.
+
+
+### Attributions
+
+Icon font: [Octicons](https://octicons.github.com/)
