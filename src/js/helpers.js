@@ -21,27 +21,27 @@ export function createNewItem(values) {
  *   - Every key is in its own cell
  */
 export function makeRows(rows) {
-  let html = '';
-
-  rows.map(row => {
+  return rows.reduce((html, row) => {
     const keys = Object.keys(row);
-    html += '<tr>';
-    keys.map(key => html += `<td>${row[key]}</td>`);
-    html += '</tr>';
-  });
 
-  return html;
+    html += '<tr>';
+    keys.forEach(key => html += `<td>${row[key]}</td>`);
+    html += '</tr>';
+
+    return html;
+  }, '');
 }
 
-// Same as makeRows but cell content is
-// wrapped around input element
+/**
+ * Create HTML table with editable rows from array of objects
+ */
 export function makeEditableRows(rows) {
-  let html = '';
-
-  rows.map((row, rowIndex) => {
+  return rows.reduce((html, row, rowIndex, rows) => {
     const keys = Object.keys(row);
+
     html += '<tr>';
-    keys.map(key => html += `
+
+    keys.forEach(key => html += `
       <td>
         <input
           class="cell-edit"
@@ -51,12 +51,15 @@ export function makeEditableRows(rows) {
         >
       </td>`
     );
+
     html += `
       <td>
         <span class="remove-row icon-trashcan" data-row="${rowIndex}"></span>
-      </td>`;
-    html += '</tr>';
-  });
+      </td>
+    `;
 
-  return html;
+    html += '</tr>';
+
+    return html;
+  }, '');
 }
