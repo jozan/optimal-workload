@@ -44,9 +44,7 @@ header {
   justify-content: space-between;
 }
 
-.content {
-  padding: 0 64px 24px 64px;
-}
+.content { padding: 0 64px 24px 64px; }
 
 table {
   border-collapse: collapse;
@@ -71,6 +69,7 @@ table {
     padding: .75rem;
     text-align: left;
     vertical-align: top;
+    width: 100px;
 
     &:first-child { width: 250px; }
   }
@@ -187,8 +186,9 @@ form {
   padding: 32px 0;
   border-top: 1px solid #ddd;
 
-  input:not(:first-child) {
-    margin-left: $margin;
+  input {
+    &:first-child { width: 200px; }
+    &:not(:first-child) { margin-left: $margin; }
   }
 
   button[type=submit] {
