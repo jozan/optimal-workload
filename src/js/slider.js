@@ -4,7 +4,7 @@ import noUiSlider from 'nouislider';
 const slider = document.getElementById('slider');
 
 noUiSlider.create(slider, {
-  start: 40,
+  start: 200,
   step: 1,
   connect: 'lower',
   range: {
