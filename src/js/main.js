@@ -34,13 +34,11 @@ const defaultItems = [
  * Global application state
  *
  * To keep track of which view is currently
- * visible so we don't need to rely on
- * slow DOM checks.
+ * visible so we don't need to rely on DOM.
  */
 window.state = {
   showEdit: true,
-  showOptimized: false,
-  isOptimizing: false
+  showOptimized: false
 };
 
 // Generate random courses
@@ -70,6 +68,9 @@ worker.addEventListener('message', e => {
   }
 });
 
+/***************************************************************
+ * Handle button events
+ */
 $('#optimize').on('click', e => {
   $('.all-courses').velocity('slideUp', 400);
 
@@ -99,6 +100,9 @@ $('#edit-options').on('click', e => {
   }
 });
 
+/***************************************************************
+ * DOM manipulation
+ */
 function showAllCourses(courses) {
   const $allCourses = $('#all-courses');
   $('.optimized-courses').velocity('slideUp');
