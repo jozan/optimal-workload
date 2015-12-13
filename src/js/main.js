@@ -14,16 +14,17 @@ import {
   createNewItem,
 } from './helpers';
 
-import randomCourses from './randomCourses';
+// Uncomment if needed
+// import randomCourses from './randomCourses';
 
-// const items = [
-//   { name: 'Projekti', credits: 20, workload: 200 },
-//   { name: 'Algoritmit', credits: 2, workload: 40 },
-//   { name: 'Videot', credits: 5, workload: 20 },
-//   { name: 'Keikka', credits: 1, workload: 10 },
-//   { name: 'Ohjelmointi', credits: 9, workload: 90 },
-//   { name: 'Lopputyö', credits: 17, workload: 100 }
-// ];
+const defaultItems = [
+  { name: 'Projekti', credits: 20, workload: 200 },
+  { name: 'Algoritmit', credits: 2, workload: 40 },
+  { name: 'Videot', credits: 5, workload: 20 },
+  { name: 'Keikka', credits: 1, workload: 10 },
+  { name: 'Ohjelmointi', credits: 9, workload: 90 },
+  { name: 'Lopputyö', credits: 17, workload: 100 }
+];
 
 /***************************************************************
  * Initialize application
@@ -43,7 +44,7 @@ window.state = {
 };
 
 // Generate random courses
-let items = List(randomCourses(5));
+let items = List(defaultItems);
 
 // Create Web Worker
 const worker = new Worker('js/worker.js');
